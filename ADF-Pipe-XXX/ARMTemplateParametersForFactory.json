@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADF-Pipe-XXX"
+		},
+		"LinkedService_AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"Linked_Service_AzureSqlDatabase_password": {
+			"value": ""
+		},
+		"ls_onprim_filesystem_password": {
+			"value": ""
+		},
+		"LinkedService_AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://adlsgen2xxx.dfs.core.windows.net/"
+		},
+		"Linked_Service_AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "test-sqlserver-xxx.database.windows.net"
+		},
+		"Linked_Service_AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "TestDB"
+		},
+		"Linked_Service_AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "mahmoud-eltabakh"
+		},
+		"ls_onprim_filesystem_properties_typeProperties_host": {
+			"value": "C:\\"
+		},
+		"ls_onprim_filesystem_properties_typeProperties_userId": {
+			"value": "mahmoud-eltabak\\mahmoud eltabakh"
+		}
+	}
+}
