@@ -1,0 +1,27 @@
+{
+	"name": "AzureSqlTable_DataSet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Linked_Service_AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "folderName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "outputFolders"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

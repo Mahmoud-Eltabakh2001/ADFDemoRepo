@@ -1,0 +1,6 @@
+{
+	"name": "PersonalPC-SelfHosted",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

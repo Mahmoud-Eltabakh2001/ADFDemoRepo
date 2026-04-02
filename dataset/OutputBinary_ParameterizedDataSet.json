@@ -1,0 +1,27 @@
+{
+	"name": "OutputBinary_ParameterizedDataSet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LinkedService_AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"OutputFolder_DS": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().OutputFolder_DS",
+					"type": "Expression"
+				},
+				"fileSystem": "adlsgen2-container"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

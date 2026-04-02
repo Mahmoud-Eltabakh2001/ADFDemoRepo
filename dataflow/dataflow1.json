@@ -1,0 +1,102 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "EmpDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "Employees"
+				},
+				{
+					"dataset": {
+						"referenceName": "DepDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "Departments"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "OutputDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "TotalEmpAggregatedSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "OutputDataSet",
+						"type": "DatasetReference"
+					},
+					"name": "JoinedEmpDep"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregateOnDepID"
+				},
+				{
+					"name": "joinEmpDep"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          EmpID as string,",
+				"          Name as string,",
+				"          Country as string,",
+				"          DepID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Employees",
+				"source(output(",
+				"          DepID as string,",
+				"          DepName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Departments",
+				"Employees aggregate(groupBy(DepID),",
+				"     TotalEmployees = count(EmpID)) ~> aggregateOnDepID",
+				"Employees, Departments join(Employees@DepID == Departments@DepID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> joinEmpDep",
+				"aggregateOnDepID sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['TotalEmpPerDep.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          DepID,",
+				"          TotalEmployees",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> TotalEmpAggregatedSink",
+				"joinEmpDep sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['JoinedEmpDep.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          EmpID,",
+				"          EmpName = Name,",
+				"          Country,",
+				"          DepID = Employees@DepID,",
+				"          DepName",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> JoinedEmpDep"
+			]
+		}
+	}
+}

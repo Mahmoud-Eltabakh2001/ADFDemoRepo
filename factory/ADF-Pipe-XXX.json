@@ -1,0 +1,9 @@
+{
+	"name": "ADF-Pipe-XXX",
+	"location": "francecentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0ea04396-eb5a-4d23-92d2-acf70f17426a",
+		"tenantId": "ff4a48d6-4b5e-4fd3-8266-7eafc3e6e23e"
+	}
+}
